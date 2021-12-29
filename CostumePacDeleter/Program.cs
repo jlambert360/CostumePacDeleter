@@ -39,9 +39,14 @@ namespace CostumePacDeleter
                             var name = new FileInfo(filePath).Name; //name is .pac file names
                             name = name.ToLower(); //Set .pac names to lower case
                             bool containsInt = name.Any(char.IsDigit); //Check if the .pac files contain a number
-                            bool containsAlt = name.Contains("alt"); //Check if there are AltR or AltZ files
+                            bool containsAlt = name.Contains("alt") || name.Contains("_r") || name.Contains("_z"); //Check if there are AltR or AltZ files
                             bool containsExtra = name.Contains("kirby") || name.Contains("spy") || name.Contains("etc"); //Check for kirby files, spy files, and etc files
                             if (containsAlt == true && containsExtra == false || containsInt == true && containsExtra == false) //If pac file names contain a number, is an alt, and doesn't contain spy, etc, or is a kirby costume file
+                            {
+                                Console.WriteLine("Deleting file " + filePath);
+                                File.Delete(filePath); //Delete files
+                            }
+                            if (name.Contains("kirby") && containsInt == true && containsExtra == false || containsAlt == true || !name.Contains("00") && containsInt == true)
                             {
                                 Console.WriteLine("Deleting file " + filePath);
                                 File.Delete(filePath); //Delete files
